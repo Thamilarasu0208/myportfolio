@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thamilarasu · AI/ML Developer</title>
+    <!-- Font Awesome 6 (free) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: #0b0f1c;
+        color: #f0f4ff;
+        overflow-x: hidden;
+      }
+
+      /* === fixed neural canvas === */
+      #neuralCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        pointer-events: none;
+        opacity: 0.7;
+      }
+
+      /* === glassmorphism card === */
+      .glass {
+        background: rgba(15, 25, 45, 0.3);
+        backdrop-filter: blur(16px) saturate(200%);
+        -webkit-backdrop-filter: blur(16px) saturate(200%);
+        border: 1px solid rgba(0, 242, 255, 0.25);
+        border-radius: 2.5rem;
+        padding: 2.8rem 2.5rem;
+        width: 100%;
+        max-width: 1000px;
+        box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7),
+          0 0 0 1px rgba(0, 242, 255, 0.2) inset;
+      }
+
+      section {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5rem 1.5rem;
+      }
+
+      /* === navigation (icon only) === */
+      nav {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5%;
+        background: rgba(0, 8, 20, 0.7);
+        backdrop-filter: blur(18px);
+        border-bottom: 1px solid #00f2ff40;
+        z-index: 1000;
+      }
+
+      nav h2 {
+        color: #00f2ff;
+        font-weight: 500;
+        font-size: 2rem;
+        text-shadow: 0 0 12px cyan;
+        letter-spacing: 1px;
+      }
+
+      nav ul {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      nav ul li a {
+        color: #eef5ff;
+        font-size: 1.8rem;
+        transition: 0.2s;
+        display: inline-block;
+      }
+
+      nav ul li a:hover {
+        color: #00f2ff;
+        transform: scale(1.25) translateY(-3px);
+        text-shadow: 0 0 15px cyan;
+      }
+
+      /* === visitor counter (top right) === */
+      .visitor-badge {
+        position: fixed;
+        top: 85px;
+        right: 20px;
+        background: #00f2ff;
+        color: #0b1426;
+        padding: 0.5rem 1.4rem;
+        border-radius: 40px;
+        font-weight: 700;
+        font-size: 1.2rem;
+        box-shadow: 0 0 25px cyan;
+        z-index: 999;
+        border: 1px solid white;
+        backdrop-filter: blur(4px);
+      }
+
+      /* === profile image === */
+      .profile-img {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #00f2ff;
+        box-shadow: 0 0 40px #00f2ff;
+        margin-bottom: 1.8rem;
+      }
+
+      /* typing line */
+      #typing {
+        color: #9fd9ff;
+        font-size: 1.9rem;
+        font-weight: 400;
+        min-height: 4.5rem;
+        margin: 0.8rem 0 1.5rem;
+      }
+
+      /* skill bars */
+      .skill {
+        margin: 2rem 0;
+        text-align: left;
+      }
+
+      .skill span {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: #d0e0ff;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .skill span i {
+        color: #00f2ff;
+        font-size: 1.8rem;
+        width: 2.2rem;
+      }
+
+      .bar {
+        background: #1c2a4a;
+        height: 14px;
+        border-radius: 40px;
+        overflow: hidden;
+        box-shadow: 0 0 8px #00000070;
+      }
+
+      .progress {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #00f2ff, #4a7dff, #b064ff);
+        border-radius: 40px;
+        transition: width 1.3s cubic-bezier(0.22, 1, 0.5, 1);
+      }
+
+      /* projects card */
+      .project-card {
+        background: rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(8px);
+        padding: 1.8rem;
+        margin: 1.5rem 0;
+        border-radius: 2rem;
+        border: 1px solid #00f2ff30;
+        font-size: 1.4rem;
+        font-weight: 500;
+        transition: 0.2s;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+      }
+
+      .project-card i {
+        color: #00f2ff;
+        font-size: 2rem;
+        width: 2.8rem;
+      }
+
+      .project-card:hover {
+        border-color: #00f2ff;
+        transform: translateX(10px) scale(1.02);
+        background: rgba(0, 242, 255, 0.1);
+      }
+
+      /* resume button */
+      .resume-btn {
+        display: inline-block;
+        background: linear-gradient(135deg, #00f2ff, #3d6eff);
+        color: #0c1122;
+        font-weight: 700;
+        padding: 1rem 2.5rem;
+        border-radius: 60px;
+        font-size: 1.3rem;
+        text-decoration: none;
+        box-shadow: 0 4px 25px cyan;
+        margin-top: 1rem;
+        transition: 0.2s;
+        border: none;
+        cursor: pointer;
+      }
+
+      .resume-btn i {
+        margin-right: 10px;
+      }
+
+      .resume-btn:hover {
+        background: linear-gradient(135deg, #5af2ff, #628eff);
+        box-shadow: 0 8px 35px cyan;
+        transform: scale(1.03);
+      }
+
+      /* contact form */
+      input,
+      textarea {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid #00f2ff50;
+        border-radius: 40px;
+        padding: 1.2rem 1.5rem;
+        margin: 1rem 0;
+        font-size: 1.1rem;
+        color: white;
+        backdrop-filter: blur(6px);
+      }
+
+      input:focus,
+      textarea:focus {
+        outline: 2px solid #00f2ff;
+        background: rgba(0, 40, 70, 0.6);
+      }
+
+      /* received messages */
+      #messageList div {
+        background: rgba(0, 200, 255, 0.1);
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+        border-left: 6px solid #00f2ff;
+        margin: 1.5rem 0;
+        text-align: left;
+        word-break: break-word;
+      }
+
+      /* voice button */
+      #voiceBtn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #00f2ff;
+        color: #0f1a2f;
+        padding: 15px 22px;
+        border-radius: 60px;
+        font-weight: 700;
+        font-size: 1.2rem;
+        cursor: pointer;
+        display: none;
+        box-shadow: 0 0 30px cyan;
+        z-index: 1000;
+        border: 2px solid white;
+        backdrop-filter: blur(4px);
+      }
+
+      /* share button & menu */
+      #shareBtn {
+        position: fixed;
+        bottom: 110px;
+        right: 30px;
+        background: #00f2ff;
+        color: #0f1a2f;
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        cursor: pointer;
+        box-shadow: 0 0 30px cyan;
+        z-index: 1000;
+        border: 2px solid white;
+      }
+
+      #shareMenu {
+        position: fixed;
+        bottom: 185px;
+        right: 30px;
+        display: none;
+        flex-direction: column;
+        gap: 12px;
+        z-index: 1000;
+      }
+
+      #shareMenu a {
+        background: #00f2ff;
+        color: #0b1426;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        box-shadow: 0 0 25px cyan;
+        cursor: pointer;
+        transition: 0.15s;
+        border: 1px solid white;
+      }
+
+      #shareMenu a:hover {
+        transform: scale(1.15);
+        background: white;
+      }
+
+      /* chatbot */
+      #chatbot {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        width: 310px;
+        background: rgba(5, 15, 30, 0.9);
+        backdrop-filter: blur(20px);
+        border-radius: 30px;
+        border: 1px solid #00f2ff;
+        overflow: hidden;
+        z-index: 999;
+        box-shadow: 0 15px 30px black;
+      }
+
+      #chatHeader {
+        background: #00f2ff;
+        color: #0d1a2b;
+        padding: 15px;
+        font-weight: 700;
+        font-size: 1.3rem;
+        text-align: center;
+      }
+
+      #chatMessages {
+        height: 200px;
+        overflow-y: auto;
+        padding: 15px;
+        font-size: 1rem;
+        background: rgba(0, 0, 0, 0.3);
+        color: white;
+      }
+
+      #chatInput {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        background: #111d30;
+        color: white;
+        font-size: 1rem;
+        border-top: 1px solid cyan;
+      }
+      #chatInput::placeholder {
+        color: #aab9d4;
+      }
+
+      /* mobile menu (though we keep icons) — for extra small, reduce gaps */
+      @media (max-width: 680px) {
+        nav ul {
+          gap: 1rem;
+        }
+        nav ul li a {
+          font-size: 1.5rem;
+        }
+        nav h2 {
+          font-size: 1.5rem;
+        }
+        .glass {
+          padding: 2rem 1.2rem;
+        }
+        #typing {
+          font-size: 1.4rem;
+        }
+        .visitor-badge {
+          font-size: 1rem;
+          padding: 0.3rem 1rem;
+          top: 75px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        #chatbot {
+          width: 260px;
+        }
+        .profile-img {
+          width: 140px;
+          height: 140px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- neural network background -->
+    <canvas id="neuralCanvas"></canvas>
+
+    <!-- navigation (only icons) -->
+    <nav>
+      <h2>Thamilarasu</h2>
+      <ul>
+        <li>
+          <a href="#home" title="Home"><i class="fas fa-house"></i></a>
+        </li>
+        <li>
+          <a href="#skills" title="Skills"><i class="fas fa-code"></i></a>
+        </li>
+        <li>
+          <a href="#projects" title="Projects"
+            ><i class="fas fa-diagram-project"></i
+          ></a>
+        </li>
+        <li>
+          <a href="#contact" title="Contact"><i class="fas fa-envelope"></i></a>
+        </li>
+        <li>
+          <a href="#messages" title="Messages"
+            ><i class="fas fa-comments"></i
+          ></a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- visitor counter (dynamic) -->
+    <div class="visitor-badge" id="visitorCount">👥 0</div>
+
+    <!-- HOME -->
+    <section id="home">
+      <div class="glass">
+        <img
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%2300244d' stroke='%2300f2ff' stroke-width='4' /%3E%3Ctext x='50' y='70' font-size='44' text-anchor='middle' fill='%23ffffff' font-family='Arial'%3E🧠%3C/text%3E%3C/svg%3E"
+          alt="profile avatar"
+          class="profile-img"
+        />
+        <h1 style="font-size: 3rem">Thamilarasu S K</h1>
+        <div id="typing"></div>
+        <a
+          href="#"
+          class="resume-btn"
+          onclick="alert('📄 Resume demo download'); return false;"
+          ><i class="fas fa-download"></i> Download Resume</a
+        >
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="glass">
+        <h2 style="font-size: 3rem; margin-bottom: 1.8rem">⚙️ Core Skills</h2>
+        <div class="skill">
+          <span><i class="fab fa-cuttlefish"></i> C, C++, Java</span>
+          <div class="bar"><div class="progress" data-width="85%"></div></div>
+        </div>
+        <div class="skill">
+          <span><i class="fab fa-html5"></i> HTML5 & CSS3</span>
+          <div class="bar"><div class="progress" data-width="90%"></div></div>
+        </div>
+        <div class="skill">
+          <span><i class="fas fa-database"></i> MongoDB</span>
+          <div class="bar"><div class="progress" data-width="75%"></div></div>
+        </div>
+        <div class="skill">
+          <span><i class="fas fa-sitemap"></i> Data Structures</span>
+          <div class="bar"><div class="progress" data-width="80%"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="glass">
+        <h2 style="font-size: 3rem; margin-bottom: 2rem">📌 Projects</h2>
+        <div class="project-card">
+          <i class="fas fa-users"></i> Student Record Management System
+        </div>
+        <div class="project-card">
+          <i class="fas fa-laptop-code"></i> Personal Portfolio Website
+        </div>
+        <div class="project-card">
+          <i class="fas fa-boxes"></i> Product Management System (MongoDB)
+        </div>
+        <div class="project-card">
+          <i class="fas fa-university"></i> ATM Banking System (OOP)
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT (form) -->
+    <section id="contact">
+      <div class="glass">
+        <h2 style="font-size: 3rem">📬 Send Message</h2>
+        <form id="messageForm">
+          <input type="text" id="msgName" placeholder="Your Name" required />
+          <input type="email" id="msgEmail" placeholder="Your Email" required />
+          <textarea
+            id="msgText"
+            rows="4"
+            placeholder="Your Message ..."
+            required
+          ></textarea>
+          <button type="submit" class="resume-btn">
+            <i class="fas fa-paper-plane"></i> Send
+          </button>
+        </form>
+        <p style="margin-top: 2rem; font-size: 1.3rem">
+          <i class="fab fa-linkedin" style="color: #00f2ff"></i>
+          <a
+            href="https://www.linkedin.com/in/thamilarasu-s-k-285984332/"
+            target="_blank"
+            style="color: #00f2ff; font-weight: 600"
+            >Thamilarasu SK</a
+          >
+        </p>
+      </div>
+    </section>
+
+    <!-- MESSAGES (received) -->
+    <section id="messages">
+      <div class="glass">
+        <h2 style="font-size: 3rem">📋 Received Messages</h2>
+        <div id="messageList"></div>
+      </div>
+    </section>
+
+    <!-- floating buttons: voice & share -->
+    <div id="voiceBtn"><i class="fas fa-volume-up"></i> Read</div>
+    <div id="shareBtn"><i class="fas fa-share-alt"></i></div>
+    <div id="shareMenu">
+      <a href="#" onclick="shareSocial('whatsapp')"
+        ><i class="fab fa-whatsapp"></i
+      ></a>
+      <a href="#" onclick="shareSocial('facebook')"
+        ><i class="fab fa-facebook-f"></i
+      ></a>
+      <a href="#" onclick="shareSocial('instagram')"
+        ><i class="fab fa-instagram"></i
+      ></a>
+    </div>
+
+    <!-- chatbot -->
+    <div id="chatbot">
+      <div id="chatHeader">🤖 AI Assistant</div>
+      <div id="chatMessages"></div>
+      <input type="text" id="chatInput" placeholder="Ask anything..." />
+    </div>
+
+    <script>
+      (function () {
+        // ===== TYPING ANIMATION =====
+        const typingDiv = document.getElementById("typing");
+        const text = "AI/ML Developer · CSE Student · Deep Learning Enthusiast";
+        let idx = 0;
+        function typeWriter() {
+          if (idx < text.length) {
+            typingDiv.innerHTML += text[idx];
+            idx++;
+            setTimeout(typeWriter, 80);
+          } else {
+            typingDiv.innerHTML +=
+              '<span class="cursor" style="opacity:1;">|</span>';
+          }
+        }
+        typeWriter();
+
+        // ===== SKILL BARS ON INTERSECTION =====
+        const skillSection = document.getElementById("skills");
+        const observer = new IntersectionObserver(
+          (entries) => {
+            if (entries[0].isIntersecting) {
+              document.querySelectorAll(".progress").forEach((bar) => {
+                const width = bar.getAttribute("data-width");
+                if (width) bar.style.width = width;
+              });
+              observer.unobserve(skillSection);
+            }
+          },
+          { threshold: 0.3 }
+        );
+        observer.observe(skillSection);
+
+        // ===== VISITOR COUNTER (localStorage) =====
+        let visits = localStorage.getItem("portfolioVisits")
+          ? Number(localStorage.getItem("portfolioVisits")) + 1
+          : 1;
+        localStorage.setItem("portfolioVisits", visits);
+        document.getElementById("visitorCount").innerText = "👥 " + visits;
+
+        // ===== VOICE READ (selected text) =====
+        const voiceBtn = document.getElementById("voiceBtn");
+        document.addEventListener("mouseup", () => {
+          const selected = window.getSelection().toString().trim();
+          if (selected) {
+            voiceBtn.style.display = "block";
+            voiceBtn.onclick = () => {
+              const utterance = new SpeechSynthesisUtterance(selected);
+              speechSynthesis.cancel();
+              speechSynthesis.speak(utterance);
+            };
+          } else {
+            voiceBtn.style.display = "none";
+          }
+        });
+
+        // ===== SHARE MENU (WhatsApp, FB, IG) =====
+        const shareBtn = document.getElementById("shareBtn");
+        const shareMenu = document.getElementById("shareMenu");
+        shareBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          shareMenu.style.display =
+            shareMenu.style.display === "flex" ? "none" : "flex";
+        });
+        window.shareSocial = function (platform) {
+          const url = encodeURIComponent(window.location.href);
+          let shareUrl = "";
+          if (platform === "whatsapp") shareUrl = `https://wa.me/?text=${url}`;
+          else if (platform === "facebook")
+            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+          else if (platform === "instagram") {
+            alert(
+              "📸 Instagram sharing: you can copy the link manually (demo)"
+            );
+            return;
+          }
+          if (shareUrl) window.open(shareUrl, "_blank");
+        };
+
+        document.addEventListener("click", (e) => {
+          if (!shareBtn.contains(e.target) && !shareMenu.contains(e.target)) {
+            shareMenu.style.display = "none";
+          }
+        });
+
+        window.copyLink = function () {
+          // optional
+          navigator.clipboard.writeText(window.location.href);
+          alert("Link copied!");
+        };
+
+        // ===== CHATBOT DEMO =====
+        const chatInput = document.getElementById("chatInput");
+        const chatMessages = document.getElementById("chatMessages");
+        chatInput.addEventListener("keypress", function (e) {
+          if (e.key === "Enter" && this.value.trim() !== "") {
+            chatMessages.innerHTML += `<div><b>You:</b> ${this.value}</div>`;
+            chatMessages.innerHTML += `<div><b>AI:</b> (backend required) but I'm a demo 🤖</div>`;
+            this.value = "";
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+          }
+        });
+
+        // ===== MESSAGES (localStorage) =====
+        const messageForm = document.getElementById("messageForm");
+        const msgName = document.getElementById("msgName");
+        const msgEmail = document.getElementById("msgEmail");
+        const msgText = document.getElementById("msgText");
+        const messageListDiv = document.getElementById("messageList");
+
+        function loadMessages() {
+          const stored =
+            JSON.parse(localStorage.getItem("portfolioMessages")) || [];
+          messageListDiv.innerHTML = "";
+          stored.forEach((m) => {
+            messageListDiv.innerHTML += `<div><b>${escapeHtml(
+              m.name
+            )}</b>  (${escapeHtml(m.email)})<br>💬 ${escapeHtml(m.text)}</div>`;
+          });
+        }
+        function escapeHtml(unsafe) {
+          return unsafe.replace(/[&<>"]/g, function (m) {
+            if (m === "&") return "&amp;";
+            if (m === "<") return "&lt;";
+            if (m === ">") return "&gt;";
+            if (m === '"') return "&quot;";
+            return m;
+          });
+        }
+
+        messageForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const newMsg = {
+            name: msgName.value,
+            email: msgEmail.value,
+            text: msgText.value,
+          };
+          const messages =
+            JSON.parse(localStorage.getItem("portfolioMessages")) || [];
+          messages.push(newMsg);
+          localStorage.setItem("portfolioMessages", JSON.stringify(messages));
+          messageForm.reset();
+          loadMessages();
+          alert("✅ Message saved");
+        });
+
+        loadMessages();
+
+        // ===== NEURAL BACKGROUND CANVAS =====
+        const canvas = document.getElementById("neuralCanvas");
+        const ctx = canvas.getContext("2d");
+        let w, h;
+        function resizeCanvas() {
+          w = window.innerWidth;
+          h = window.innerHeight;
+          canvas.width = w;
+          canvas.height = h;
+        }
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        const nodes = [];
+        for (let i = 0; i < 55; i++) {
+          nodes.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 0.6,
+            vy: (Math.random() - 0.5) * 0.6,
+          });
+        }
+
+        function drawNeural() {
+          ctx.clearRect(0, 0, w, h);
+          // connections
+          for (let i = 0; i < nodes.length; i++) {
+            for (let j = i + 1; j < nodes.length; j++) {
+              const dx = nodes[i].x - nodes[j].x;
+              const dy = nodes[i].y - nodes[j].y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < 130) {
+                ctx.beginPath();
+                ctx.moveTo(nodes[i].x, nodes[i].y);
+                ctx.lineTo(nodes[j].x, nodes[j].y);
+                ctx.strokeStyle = `rgba(0, 242, 255, ${
+                  0.2 * (1 - dist / 180)
+                })`;
+                ctx.lineWidth = 1.3;
+                ctx.stroke();
+              }
+            }
+          }
+          // nodes
+          nodes.forEach((n) => {
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, 3.5, 0, 2 * Math.PI);
+            ctx.fillStyle = "#00f2ff";
+            ctx.shadowColor = "#00f2ff";
+            ctx.shadowBlur = 12;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            n.x += n.vx;
+            n.y += n.vy;
+            if (n.x < 0 || n.x > w) n.vx *= -1;
+            if (n.y < 0 || n.y > h) n.vy *= -1;
+          });
+          requestAnimationFrame(drawNeural);
+        }
+        drawNeural();
+      })();
+    </script>
+  </body>
+</html>
