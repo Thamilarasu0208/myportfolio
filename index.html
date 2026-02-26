@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Thamilarasu · AI/ML Developer</title>
+    <title>Thamilarasu · AI/ML Dev</title>
     <!-- Font Awesome 6 (free) -->
     <link
       rel="stylesheet"
@@ -14,42 +14,27 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+        font-family: "Segoe UI", Roboto, system-ui, sans-serif;
         scroll-behavior: smooth;
       }
 
       body {
-        background: #0b0f1c;
-        color: #f0f4ff;
+        background: #0a0f1e;
+        background-image: radial-gradient(
+            circle at 20% 30%,
+            rgba(0, 255, 255, 0.05) 0%,
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 90% 70%,
+            rgba(100, 0, 255, 0.05) 0%,
+            transparent 40%
+          );
+        color: #eef5ff;
         overflow-x: hidden;
       }
 
-      /* === fixed neural canvas === */
-      #neuralCanvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: -1;
-        pointer-events: none;
-        opacity: 0.7;
-      }
-
-      /* === glassmorphism card === */
-      .glass {
-        background: rgba(15, 25, 45, 0.3);
-        backdrop-filter: blur(16px) saturate(200%);
-        -webkit-backdrop-filter: blur(16px) saturate(200%);
-        border: 1px solid rgba(0, 242, 255, 0.25);
-        border-radius: 2.5rem;
-        padding: 2.8rem 2.5rem;
-        width: 100%;
-        max-width: 1000px;
-        box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7),
-          0 0 0 1px rgba(0, 242, 255, 0.2) inset;
-      }
-
+      /* ---------- SECTION LAYOUT ---------- */
       section {
         min-height: 100vh;
         display: flex;
@@ -58,725 +43,604 @@
         padding: 5rem 1.5rem;
       }
 
-      /* === navigation (icon only) === */
+      /* ---------- GLASS CARD (neon cyan theme) ---------- */
+      .glass {
+        background: rgba(12, 22, 38, 0.45);
+        backdrop-filter: blur(15px) saturate(180%);
+        -webkit-backdrop-filter: blur(15px) saturate(180%);
+        border: 1px solid rgba(0, 242, 255, 0.35);
+        border-radius: 2.5rem;
+        padding: 2.8rem 2.2rem;
+        width: 100%;
+        max-width: 1000px;
+        box-shadow: 0 25px 45px -10px rgba(0, 0, 0, 0.8),
+          0 0 0 1px rgba(0, 242, 255, 0.2) inset,
+          0 0 30px rgba(0, 242, 255, 0.2);
+        text-align: center;
+      }
+
+      /* ---------- FIXED NAV (icon based) ---------- */
       nav {
         position: fixed;
-        width: 100%;
         top: 0;
-        left: 0;
+        width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 1rem 5%;
-        background: rgba(0, 8, 20, 0.7);
-        backdrop-filter: blur(18px);
-        border-bottom: 1px solid #00f2ff40;
+        background: rgba(2, 10, 22, 0.75);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid #00f2ff60;
         z-index: 1000;
       }
 
       nav h2 {
         color: #00f2ff;
-        font-weight: 500;
-        font-size: 2rem;
-        text-shadow: 0 0 12px cyan;
-        letter-spacing: 1px;
+        font-size: 1.9rem;
+        letter-spacing: 2px;
+        text-shadow: 0 0 8px cyan;
       }
 
       nav ul {
         display: flex;
-        gap: 2rem;
+        gap: 2.3rem;
         list-style: none;
       }
 
       nav ul li a {
         color: #eef5ff;
-        font-size: 1.8rem;
+        font-size: 1.9rem;
         transition: 0.2s;
         display: inline-block;
       }
 
       nav ul li a:hover {
         color: #00f2ff;
-        transform: scale(1.25) translateY(-3px);
-        text-shadow: 0 0 15px cyan;
+        transform: scale(1.25) translateY(-2px);
+        filter: drop-shadow(0 0 8px cyan);
       }
 
-      /* === visitor counter (top right) === */
-      .visitor-badge {
-        position: fixed;
-        top: 85px;
-        right: 20px;
-        background: #00f2ff;
-        color: #0b1426;
-        padding: 0.5rem 1.4rem;
-        border-radius: 40px;
-        font-weight: 700;
-        font-size: 1.2rem;
-        box-shadow: 0 0 25px cyan;
-        z-index: 999;
-        border: 1px solid white;
-        backdrop-filter: blur(4px);
+      /* ---------- 3D ANIMATED FLOATING NAME ---------- */
+      .name3d {
+        font-size: 3.2rem;
+        font-weight: 900;
+        color: #b3f0ff;
+        text-transform: uppercase;
+        animation: float3d 3.2s ease-in-out infinite;
+        text-shadow: 0 1px 0 #b0eeff, 0 2px 0 #9ad0ff, 0 3px 0 #7cb6ff,
+          0 4px 0 #5e9cff, 0 5px 0 #4082ff, 0 6px 1px rgba(0, 0, 0, 0.4),
+          0 0 10px #00f2ff, 0 0 25px #00a6ff;
+        line-height: 1.2;
       }
 
-      /* === profile image === */
+      @keyframes float3d {
+        0% {
+          transform: rotateX(2deg) translateY(0);
+        }
+        50% {
+          transform: rotateX(12deg) translateY(-14px);
+        }
+        100% {
+          transform: rotateX(2deg) translateY(0);
+        }
+      }
+
+      /* profile image */
       .profile-img {
-        width: 180px;
-        height: 180px;
+        width: 160px;
+        height: 160px;
         border-radius: 50%;
         object-fit: cover;
         border: 4px solid #00f2ff;
-        box-shadow: 0 0 40px #00f2ff;
-        margin-bottom: 1.8rem;
+        box-shadow: 0 0 35px #00f2ff, 0 0 0 2px rgba(255, 255, 255, 0.1);
+        margin: 1.8rem 0 1rem;
+        background: #0f1a2b;
       }
 
-      /* typing line */
-      #typing {
-        color: #9fd9ff;
-        font-size: 1.9rem;
-        font-weight: 400;
-        min-height: 4.5rem;
-        margin: 0.8rem 0 1.5rem;
+      .role-line {
+        font-size: 1.25rem;
+        color: #b0d4ff;
+        word-spacing: 4px;
       }
 
-      /* skill bars */
-      .skill {
+      /* ---------- SKILLS (animated bars) ---------- */
+      .skill-item {
         margin: 2rem 0;
         text-align: left;
       }
-
-      .skill span {
-        font-size: 1.5rem;
-        font-weight: 500;
-        color: #d0e0ff;
+      .skill-item p {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
         display: flex;
         align-items: center;
-        gap: 0.8rem;
-        margin-bottom: 0.6rem;
+        gap: 0.6rem;
       }
-
-      .skill span i {
-        color: #00f2ff;
-        font-size: 1.8rem;
-        width: 2.2rem;
-      }
-
       .bar {
-        background: #1c2a4a;
-        height: 14px;
+        background: #1f2c48;
+        height: 16px;
         border-radius: 40px;
         overflow: hidden;
-        box-shadow: 0 0 8px #00000070;
+        box-shadow: 0 0 6px cyan;
       }
-
       .progress {
         height: 100%;
         width: 0%;
         background: linear-gradient(90deg, #00f2ff, #4a7dff, #b064ff);
         border-radius: 40px;
-        transition: width 1.3s cubic-bezier(0.22, 1, 0.5, 1);
+        transition: width 1.3s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+        box-shadow: 0 0 12px #00f2ff;
       }
 
-      /* projects card */
+      /* ---------- PROJECT CARDS (hover effect) ---------- */
       .project-card {
-        background: rgba(255, 255, 255, 0.04);
-        backdrop-filter: blur(8px);
-        padding: 1.8rem;
-        margin: 1.5rem 0;
-        border-radius: 2rem;
-        border: 1px solid #00f2ff30;
-        font-size: 1.4rem;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1.3rem 1.8rem;
+        margin: 1.2rem 0;
+        border-radius: 2.2rem;
+        border-left: 4px solid #00f2ff;
+        font-size: 1.25rem;
         font-weight: 500;
-        transition: 0.2s;
+        transition: 0.3s;
         text-align: left;
+        backdrop-filter: blur(4px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      }
+      .project-card:hover {
+        background: rgba(0, 242, 255, 0.15);
+        transform: translateX(12px) scale(1.01);
+        border-left-width: 8px;
+        box-shadow: 0 0 25px cyan;
+      }
+
+      /* ---------- CONTACT LINKS (neon) ---------- */
+      .contact-item {
         display: flex;
         align-items: center;
-        gap: 1.2rem;
+        justify-content: center;
+        gap: 1rem;
+        margin: 1.4rem 0;
+        font-size: 1.2rem;
+        flex-wrap: wrap;
       }
-
-      .project-card i {
+      .contact-link {
         color: #00f2ff;
-        font-size: 2rem;
-        width: 2.8rem;
-      }
-
-      .project-card:hover {
-        border-color: #00f2ff;
-        transform: translateX(10px) scale(1.02);
-        background: rgba(0, 242, 255, 0.1);
-      }
-
-      /* resume button */
-      .resume-btn {
-        display: inline-block;
-        background: linear-gradient(135deg, #00f2ff, #3d6eff);
-        color: #0c1122;
-        font-weight: 700;
-        padding: 1rem 2.5rem;
-        border-radius: 60px;
-        font-size: 1.3rem;
         text-decoration: none;
-        box-shadow: 0 4px 25px cyan;
-        margin-top: 1rem;
+        border-bottom: 1px dashed #00f2ff80;
         transition: 0.2s;
-        border: none;
-        cursor: pointer;
       }
-
-      .resume-btn i {
-        margin-right: 10px;
-      }
-
-      .resume-btn:hover {
-        background: linear-gradient(135deg, #5af2ff, #628eff);
-        box-shadow: 0 8px 35px cyan;
-        transform: scale(1.03);
-      }
-
-      /* contact form */
-      input,
-      textarea {
-        width: 100%;
-        background: rgba(255, 255, 255, 0.07);
-        border: 1px solid #00f2ff50;
-        border-radius: 40px;
-        padding: 1.2rem 1.5rem;
-        margin: 1rem 0;
-        font-size: 1.1rem;
+      .contact-link:hover {
         color: white;
-        backdrop-filter: blur(6px);
+        border-bottom-color: white;
+        text-shadow: 0 0 8px cyan;
+      }
+      i.fa-envelope,
+      i.fa-linkedin,
+      i.fa-github {
+        width: 2rem;
+        font-size: 1.6rem;
+        color: #00f2ff;
       }
 
-      input:focus,
-      textarea:focus {
-        outline: 2px solid #00f2ff;
-        background: rgba(0, 40, 70, 0.6);
+      /* ---------- FLOATING CHATBOT (left) ---------- */
+      #aiBtn {
+        position: fixed;
+        bottom: 30px;
+        left: 30px;
+        width: 68px;
+        height: 68px;
+        background: #00f2ff;
+        color: #0a0f1e;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        cursor: pointer;
+        box-shadow: 0 0 30px cyan, 0 4px 12px black;
+        border: 2px solid white;
+        transition: 0.2s;
+        z-index: 500;
+      }
+      #aiBtn:hover {
+        transform: scale(1.1) rotate(5deg);
+        background: white;
+        color: #0a0f1e;
       }
 
-      /* received messages */
-      #messageList div {
-        background: rgba(0, 200, 255, 0.1);
-        padding: 1.5rem;
-        border-radius: 1.5rem;
-        border-left: 6px solid #00f2ff;
-        margin: 1.5rem 0;
-        text-align: left;
-        word-break: break-word;
+      #chatbox {
+        display: none;
+        position: fixed;
+        bottom: 110px;
+        left: 30px;
+        width: 270px;
+        background: #111e30;
+        backdrop-filter: blur(20px);
+        border: 1px solid cyan;
+        border-radius: 30px;
+        padding: 1.3rem 1rem;
+        box-shadow: 0 15px 40px rgba(0, 242, 255, 0.3);
+        z-index: 500;
       }
 
-      /* voice button */
-      #voiceBtn {
+      .qbtn {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        padding: 12px 0;
+        background: #00f2ff;
+        border: none;
+        border-radius: 50px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #0f1a2b;
+        cursor: pointer;
+        transition: 0.2s;
+        box-shadow: 0 0 6px cyan;
+      }
+      .qbtn:hover {
+        background: white;
+        transform: scale(1.02);
+        box-shadow: 0 0 20px cyan;
+      }
+      #chatResponse {
+        margin-top: 15px;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 20px;
+        font-size: 0.95rem;
+        color: #c0e6ff;
+        border: 1px solid #00f2ff40;
+      }
+
+      /* ---------- FLOATING SHARE (right) ---------- */
+      #shareBtn {
         position: fixed;
         bottom: 30px;
         right: 30px;
-        background: #00f2ff;
-        color: #0f1a2f;
-        padding: 15px 22px;
-        border-radius: 60px;
-        font-weight: 700;
-        font-size: 1.2rem;
+        width: 68px;
+        height: 68px;
+        background: #4a7dff;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
         cursor: pointer;
-        display: none;
-        box-shadow: 0 0 30px cyan;
-        z-index: 1000;
+        box-shadow: 0 0 30px #4a7dff, 0 4px 12px black;
         border: 2px solid white;
-        backdrop-filter: blur(4px);
+        transition: 0.2s;
+        z-index: 500;
+      }
+      #shareBtn:hover {
+        transform: scale(1.1) rotate(-10deg);
+        background: white;
+        color: #4a7dff;
       }
 
-      /* share button & menu */
-      #shareBtn {
+      #shareBox {
+        display: none;
         position: fixed;
         bottom: 110px;
         right: 30px;
-        background: #00f2ff;
-        color: #0f1a2f;
-        width: 65px;
-        height: 65px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        cursor: pointer;
-        box-shadow: 0 0 30px cyan;
-        z-index: 1000;
-        border: 2px solid white;
-      }
-
-      #shareMenu {
-        position: fixed;
-        bottom: 185px;
-        right: 30px;
-        display: none;
-        flex-direction: column;
-        gap: 12px;
-        z-index: 1000;
-      }
-
-      #shareMenu a {
-        background: #00f2ff;
-        color: #0b1426;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        box-shadow: 0 0 25px cyan;
-        cursor: pointer;
-        transition: 0.15s;
-        border: 1px solid white;
-      }
-
-      #shareMenu a:hover {
-        transform: scale(1.15);
-        background: white;
-      }
-
-      /* chatbot */
-      #chatbot {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        width: 310px;
-        background: rgba(5, 15, 30, 0.9);
+        background: #111e30;
         backdrop-filter: blur(20px);
+        border: 1px solid #4a7dff;
         border-radius: 30px;
-        border: 1px solid #00f2ff;
-        overflow: hidden;
-        z-index: 999;
-        box-shadow: 0 15px 30px black;
+        padding: 1.5rem 1.2rem;
+        box-shadow: 0 15px 40px #4a7dff60;
+        z-index: 500;
+        min-width: 180px;
       }
 
-      #chatHeader {
-        background: #00f2ff;
-        color: #0d1a2b;
-        padding: 15px;
-        font-weight: 700;
+      .share-link {
+        display: block;
+        margin: 15px 0;
+        color: #b0f0ff;
         font-size: 1.3rem;
+        text-decoration: none;
+        transition: 0.2s;
+        padding: 6px;
+        border-radius: 40px;
         text-align: center;
+        border: 1px solid transparent;
       }
-
-      #chatMessages {
-        height: 200px;
-        overflow-y: auto;
-        padding: 15px;
-        font-size: 1rem;
-        background: rgba(0, 0, 0, 0.3);
+      .share-link:hover {
+        background: rgba(74, 125, 255, 0.3);
+        border-color: cyan;
         color: white;
+        transform: translateX(5px);
       }
 
-      #chatInput {
-        width: 100%;
-        padding: 15px;
-        border: none;
-        background: #111d30;
-        color: white;
-        font-size: 1rem;
-        border-top: 1px solid cyan;
-      }
-      #chatInput::placeholder {
-        color: #aab9d4;
-      }
-
-      /* mobile menu (though we keep icons) — for extra small, reduce gaps */
-      @media (max-width: 680px) {
+      /* ---------- RESPONSIVE ---------- */
+      @media (max-width: 600px) {
+        nav h2 {
+          font-size: 1.4rem;
+        }
         nav ul {
-          gap: 1rem;
+          gap: 1.2rem;
         }
         nav ul li a {
           font-size: 1.5rem;
         }
-        nav h2 {
-          font-size: 1.5rem;
-        }
         .glass {
           padding: 2rem 1.2rem;
+          border-radius: 2rem;
         }
-        #typing {
-          font-size: 1.4rem;
-        }
-        .visitor-badge {
-          font-size: 1rem;
-          padding: 0.3rem 1rem;
-          top: 75px;
-        }
-      }
-
-      @media (max-width: 480px) {
-        #chatbot {
-          width: 260px;
+        .name3d {
+          font-size: 2.3rem;
         }
         .profile-img {
-          width: 140px;
-          height: 140px;
+          width: 130px;
+          height: 130px;
+        }
+        #aiBtn,
+        #shareBtn {
+          width: 58px;
+          height: 58px;
+          font-size: 26px;
+        }
+        #chatbox {
+          left: 15px;
+          width: 240px;
+        }
+        #shareBox {
+          right: 15px;
+          min-width: 150px;
         }
       }
     </style>
   </head>
   <body>
-    <!-- neural network background -->
-    <canvas id="neuralCanvas"></canvas>
-
-    <!-- navigation (only icons) -->
+    <!-- FIXED ICON NAVIGATION -->
     <nav>
       <h2>Thamilarasu</h2>
       <ul>
         <li>
-          <a href="#home" title="Home"><i class="fas fa-house"></i></a>
+          <a href="#home" aria-label="Home"><i class="fas fa-house"></i></a>
         </li>
         <li>
-          <a href="#skills" title="Skills"><i class="fas fa-code"></i></a>
+          <a href="#skills" aria-label="Skills"><i class="fas fa-code"></i></a>
         </li>
         <li>
-          <a href="#projects" title="Projects"
+          <a href="#projects" aria-label="Projects"
             ><i class="fas fa-diagram-project"></i
           ></a>
         </li>
         <li>
-          <a href="#contact" title="Contact"><i class="fas fa-envelope"></i></a>
-        </li>
-        <li>
-          <a href="#messages" title="Messages"
-            ><i class="fas fa-comments"></i
+          <a href="#contact" aria-label="Contact"
+            ><i class="fas fa-envelope"></i
           ></a>
         </li>
       </ul>
     </nav>
 
-    <!-- visitor counter (dynamic) -->
-    <div class="visitor-badge" id="visitorCount">👥 0</div>
-
-    <!-- HOME -->
+    <!-- HOME section -->
     <section id="home">
       <div class="glass">
-        <img
-          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%2300244d' stroke='%2300f2ff' stroke-width='4' /%3E%3Ctext x='50' y='70' font-size='44' text-anchor='middle' fill='%23ffffff' font-family='Arial'%3E🧠%3C/text%3E%3C/svg%3E"
-          alt="profile avatar"
-          class="profile-img"
-        />
-        <h1 style="font-size: 3rem">Thamilarasu S K</h1>
-        <div id="typing"></div>
-        <a
-          href="#"
-          class="resume-btn"
-          onclick="alert('📄 Resume demo download'); return false;"
-          ><i class="fas fa-download"></i> Download Resume</a
-        >
+        <div class="name3d">Thamilarasu S K</div>
+        <!-- profile image (free icon) -->
+        <img src="./my_photo.jpeg" class="profile-img" />
+        <div class="role-line">
+          AI/ML Developer · CSE Student · Deep Learning Enthusiast
+        </div>
       </div>
     </section>
 
-    <!-- SKILLS -->
+    <!-- SKILLS section -->
     <section id="skills">
       <div class="glass">
-        <h2 style="font-size: 3rem; margin-bottom: 1.8rem">⚙️ Core Skills</h2>
-        <div class="skill">
-          <span><i class="fab fa-cuttlefish"></i> C, C++, Java</span>
+        <h2 style="font-size: 2.4rem; margin-bottom: 2rem">
+          <i class="fas fa-cogs" style="color: #00f2ff"></i> core skills
+        </h2>
+        <div class="skill-item">
+          <p><i class="fas fa-code"></i> C, C++, Java</p>
           <div class="bar"><div class="progress" data-width="85%"></div></div>
         </div>
-        <div class="skill">
-          <span><i class="fab fa-html5"></i> HTML5 & CSS3</span>
+        <div class="skill-item">
+          <p><i class="fab fa-html5"></i> HTML & CSS</p>
           <div class="bar"><div class="progress" data-width="90%"></div></div>
         </div>
-        <div class="skill">
-          <span><i class="fas fa-database"></i> MongoDB</span>
+        <div class="skill-item">
+          <p><i class="fas fa-database"></i> MongoDB</p>
           <div class="bar"><div class="progress" data-width="75%"></div></div>
         </div>
-        <div class="skill">
-          <span><i class="fas fa-sitemap"></i> Data Structures</span>
-          <div class="bar"><div class="progress" data-width="80%"></div></div>
-        </div>
       </div>
     </section>
 
-    <!-- PROJECTS -->
+    <!-- PROJECTS section with hover cards -->
     <section id="projects">
       <div class="glass">
-        <h2 style="font-size: 3rem; margin-bottom: 2rem">📌 Projects</h2>
-        <div class="project-card">
-          <i class="fas fa-users"></i> Student Record Management System
-        </div>
-        <div class="project-card">
-          <i class="fas fa-laptop-code"></i> Personal Portfolio Website
-        </div>
-        <div class="project-card">
-          <i class="fas fa-boxes"></i> Product Management System (MongoDB)
-        </div>
-        <div class="project-card">
-          <i class="fas fa-university"></i> ATM Banking System (OOP)
-        </div>
+        <h2 style="font-size: 2.4rem; margin-bottom: 1.8rem">
+          <i class="fas fa-diagram-project" style="color: #00f2ff"></i> projects
+        </h2>
+        <div class="project-card">📁 Student Record Management System</div>
+        <div class="project-card">🌐 Personal Portfolio Website</div>
+        <div class="project-card">📦 Product Management System</div>
+        <div class="project-card">🏧 ATM Banking System</div>
       </div>
     </section>
 
-    <!-- CONTACT (form) -->
+    <!-- CONTACT section (with real links) -->
     <section id="contact">
       <div class="glass">
-        <h2 style="font-size: 3rem">📬 Send Message</h2>
-        <form id="messageForm">
-          <input type="text" id="msgName" placeholder="Your Name" required />
-          <input type="email" id="msgEmail" placeholder="Your Email" required />
-          <textarea
-            id="msgText"
-            rows="4"
-            placeholder="Your Message ..."
-            required
-          ></textarea>
-          <button type="submit" class="resume-btn">
-            <i class="fas fa-paper-plane"></i> Send
-          </button>
-        </form>
-        <p style="margin-top: 2rem; font-size: 1.3rem">
-          <i class="fab fa-linkedin" style="color: #00f2ff"></i>
+        <h2 style="font-size: 2.4rem; margin-bottom: 2rem">
+          <i class="fas fa-paper-plane" style="color: #00f2ff"></i> contact
+        </h2>
+
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <a class="contact-link" href="mailto:thamilarasu0208@gmail.com"
+            >thamilarasu0208@gmail.com</a
+          >
+        </div>
+
+        <div class="contact-item">
+          <i class="fab fa-linkedin"></i>
           <a
+            class="contact-link"
             href="https://www.linkedin.com/in/thamilarasu-s-k-285984332/"
             target="_blank"
-            style="color: #00f2ff; font-weight: 600"
-            >Thamilarasu SK</a
+            rel="noopener"
+            >LinkedIn (thamilarasu-s-k)</a
           >
+        </div>
+
+        <div class="contact-item">
+          <i class="fab fa-github"></i>
+          <a
+            class="contact-link"
+            href="https://github.com/Thamilarasu0208"
+            target="_blank"
+            rel="noopener"
+            >GitHub /Thamilarasu0208</a
+          >
+        </div>
+
+        <!-- subtle extra note -->
+        <p style="margin-top: 2rem; opacity: 0.7; font-size: 0.95rem">
+          <i class="fas fa-shield"></i> no storage — just UI
         </p>
       </div>
     </section>
 
-    <!-- MESSAGES (received) -->
-    <section id="messages">
-      <div class="glass">
-        <h2 style="font-size: 3rem">📋 Received Messages</h2>
-        <div id="messageList"></div>
-      </div>
-    </section>
-
-    <!-- floating buttons: voice & share -->
-    <div id="voiceBtn"><i class="fas fa-volume-up"></i> Read</div>
-    <div id="shareBtn"><i class="fas fa-share-alt"></i></div>
-    <div id="shareMenu">
-      <a href="#" onclick="shareSocial('whatsapp')"
-        ><i class="fab fa-whatsapp"></i
-      ></a>
-      <a href="#" onclick="shareSocial('facebook')"
-        ><i class="fab fa-facebook-f"></i
-      ></a>
-      <a href="#" onclick="shareSocial('instagram')"
-        ><i class="fab fa-instagram"></i
-      ></a>
+    <!-- FLOATING AI CHATBOT (left) -->
+    <div id="aiBtn"><i class="fas fa-robot"></i></div>
+    <div id="chatbox">
+      <button class="qbtn" onclick="reply('skills')">
+        <i class="fas fa-cogs"></i> Skills
+      </button>
+      <button class="qbtn" onclick="reply('projects')">
+        <i class="fas fa-diagram-project"></i> Projects
+      </button>
+      <button class="qbtn" onclick="reply('role')">
+        <i class="fas fa-user"></i> Role
+      </button>
+      <button class="qbtn" onclick="reply('contact')">
+        <i class="fas fa-envelope"></i> Contact
+      </button>
+      <div id="chatResponse">👆 tap a button</div>
     </div>
 
-    <!-- chatbot -->
-    <div id="chatbot">
-      <div id="chatHeader">🤖 AI Assistant</div>
-      <div id="chatMessages"></div>
-      <input type="text" id="chatInput" placeholder="Ask anything..." />
+    <!-- FLOATING SHARE BUTTON (right) -->
+    <div id="shareBtn"><i class="fas fa-share-alt"></i></div>
+    <div id="shareBox">
+      <a class="share-link" href="#" id="waLink" target="_blank"
+        ><i class="fab fa-whatsapp"></i> WhatsApp</a
+      >
+      <a class="share-link" href="#" id="fbLink" target="_blank"
+        ><i class="fab fa-facebook-f"></i> Facebook</a
+      >
+      <a class="share-link" href="#" id="copyLinkBtn"
+        ><i class="fas fa-link"></i> Copy link</a
+      >
     </div>
 
     <script>
       (function () {
-        // ===== TYPING ANIMATION =====
-        const typingDiv = document.getElementById("typing");
-        const text = "AI/ML Developer · CSE Student · Deep Learning Enthusiast";
-        let idx = 0;
-        function typeWriter() {
-          if (idx < text.length) {
-            typingDiv.innerHTML += text[idx];
-            idx++;
-            setTimeout(typeWriter, 80);
-          } else {
-            typingDiv.innerHTML +=
-              '<span class="cursor" style="opacity:1;">|</span>';
-          }
-        }
-        typeWriter();
+        // ---------- SKILL BARS ON SCROLL (Intersection Observer) ----------
+        const skillsSection = document.getElementById("skills");
+        const progressBars = document.querySelectorAll(".progress");
+        // ensure they start at 0%
+        progressBars.forEach((bar) => (bar.style.width = "0%"));
 
-        // ===== SKILL BARS ON INTERSECTION =====
-        const skillSection = document.getElementById("skills");
         const observer = new IntersectionObserver(
           (entries) => {
             if (entries[0].isIntersecting) {
-              document.querySelectorAll(".progress").forEach((bar) => {
+              progressBars.forEach((bar) => {
                 const width = bar.getAttribute("data-width");
                 if (width) bar.style.width = width;
               });
-              observer.unobserve(skillSection);
+            } else {
+              // reset when out of view (optional, for re-trigger)
+              progressBars.forEach((bar) => (bar.style.width = "0%"));
             }
           },
           { threshold: 0.3 }
         );
-        observer.observe(skillSection);
 
-        // ===== VISITOR COUNTER (localStorage) =====
-        let visits = localStorage.getItem("portfolioVisits")
-          ? Number(localStorage.getItem("portfolioVisits")) + 1
-          : 1;
-        localStorage.setItem("portfolioVisits", visits);
-        document.getElementById("visitorCount").innerText = "👥 " + visits;
+        observer.observe(skillsSection);
 
-        // ===== VOICE READ (selected text) =====
-        const voiceBtn = document.getElementById("voiceBtn");
-        document.addEventListener("mouseup", () => {
-          const selected = window.getSelection().toString().trim();
-          if (selected) {
-            voiceBtn.style.display = "block";
-            voiceBtn.onclick = () => {
-              const utterance = new SpeechSynthesisUtterance(selected);
-              speechSynthesis.cancel();
-              speechSynthesis.speak(utterance);
-            };
-          } else {
-            voiceBtn.style.display = "none";
-          }
+        // ---------- CHATBOT TOGGLE + REPLY ----------
+        const aiBtn = document.getElementById("aiBtn");
+        const chatbox = document.getElementById("chatbox");
+
+        aiBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          chatbox.style.display =
+            chatbox.style.display === "block" ? "none" : "block";
         });
 
-        // ===== SHARE MENU (WhatsApp, FB, IG) =====
+        // reply function (global for onclick)
+        window.reply = function (type) {
+          let responseText = "";
+          if (type === "skills")
+            responseText = "💻 Skills: C, C++, Java, HTML, CSS, MongoDB.";
+          else if (type === "projects")
+            responseText =
+              "📌 Projects: Student Record, Portfolio, Product Mgmt, ATM.";
+          else if (type === "role")
+            responseText =
+              "⚡ Role: AI/ML Developer · CSE Student · Deep Learning.";
+          else if (type === "contact")
+            responseText =
+              "📬 thamilarasu0208@gmail.com | LinkedIn/GitHub in contact section.";
+          document.getElementById("chatResponse").innerText = responseText;
+        };
+
+        // ---------- SHARE BUTTON TOGGLE + LINK HANDLING ----------
         const shareBtn = document.getElementById("shareBtn");
-        const shareMenu = document.getElementById("shareMenu");
+        const shareBox = document.getElementById("shareBox");
+
         shareBtn.addEventListener("click", (e) => {
           e.stopPropagation();
-          shareMenu.style.display =
-            shareMenu.style.display === "flex" ? "none" : "flex";
+          shareBox.style.display =
+            shareBox.style.display === "block" ? "none" : "block";
         });
-        window.shareSocial = function (platform) {
-          const url = encodeURIComponent(window.location.href);
-          let shareUrl = "";
-          if (platform === "whatsapp") shareUrl = `https://wa.me/?text=${url}`;
-          else if (platform === "facebook")
-            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-          else if (platform === "instagram") {
-            alert(
-              "📸 Instagram sharing: you can copy the link manually (demo)"
-            );
-            return;
-          }
-          if (shareUrl) window.open(shareUrl, "_blank");
-        };
 
-        document.addEventListener("click", (e) => {
-          if (!shareBtn.contains(e.target) && !shareMenu.contains(e.target)) {
-            shareMenu.style.display = "none";
+        // close share/chat if clicked outside (nice UX)
+        document.addEventListener("click", function (e) {
+          if (!shareBtn.contains(e.target) && !shareBox.contains(e.target)) {
+            shareBox.style.display = "none";
+          }
+          if (!aiBtn.contains(e.target) && !chatbox.contains(e.target)) {
+            chatbox.style.display = "none";
           }
         });
 
-        window.copyLink = function () {
-          // optional
-          navigator.clipboard.writeText(window.location.href);
-          alert("Link copied!");
-        };
+        // dynamic share links
+        const currentUrl = encodeURIComponent(window.location.href);
+        const waLink = document.getElementById("waLink");
+        const fbLink = document.getElementById("fbLink");
 
-        // ===== CHATBOT DEMO =====
-        const chatInput = document.getElementById("chatInput");
-        const chatMessages = document.getElementById("chatMessages");
-        chatInput.addEventListener("keypress", function (e) {
-          if (e.key === "Enter" && this.value.trim() !== "") {
-            chatMessages.innerHTML += `<div><b>You:</b> ${this.value}</div>`;
-            chatMessages.innerHTML += `<div><b>AI:</b> (backend required) but I'm a demo 🤖</div>`;
-            this.value = "";
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-          }
-        });
+        waLink.href = `https://wa.me/?text=${currentUrl}`;
+        fbLink.href = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
 
-        // ===== MESSAGES (localStorage) =====
-        const messageForm = document.getElementById("messageForm");
-        const msgName = document.getElementById("msgName");
-        const msgEmail = document.getElementById("msgEmail");
-        const msgText = document.getElementById("msgText");
-        const messageListDiv = document.getElementById("messageList");
-
-        function loadMessages() {
-          const stored =
-            JSON.parse(localStorage.getItem("portfolioMessages")) || [];
-          messageListDiv.innerHTML = "";
-          stored.forEach((m) => {
-            messageListDiv.innerHTML += `<div><b>${escapeHtml(
-              m.name
-            )}</b>  (${escapeHtml(m.email)})<br>💬 ${escapeHtml(m.text)}</div>`;
+        document
+          .getElementById("copyLinkBtn")
+          .addEventListener("click", (e) => {
+            e.preventDefault();
+            navigator.clipboard
+              .writeText(window.location.href)
+              .then(() => {
+                alert("✅ Link copied to clipboard");
+              })
+              .catch(() => alert("⚠️ copy failed"));
+            shareBox.style.display = "none"; // hide after action
           });
-        }
-        function escapeHtml(unsafe) {
-          return unsafe.replace(/[&<>"]/g, function (m) {
-            if (m === "&") return "&amp;";
-            if (m === "<") return "&lt;";
-            if (m === ">") return "&gt;";
-            if (m === '"') return "&quot;";
-            return m;
-          });
-        }
 
-        messageForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const newMsg = {
-            name: msgName.value,
-            email: msgEmail.value,
-            text: msgText.value,
-          };
-          const messages =
-            JSON.parse(localStorage.getItem("portfolioMessages")) || [];
-          messages.push(newMsg);
-          localStorage.setItem("portfolioMessages", JSON.stringify(messages));
-          messageForm.reset();
-          loadMessages();
-          alert("✅ Message saved");
-        });
+        // stop propagation inside sharebox/chatbox to avoid immediate close when interacting
+        shareBox.addEventListener("click", (e) => e.stopPropagation());
+        chatbox.addEventListener("click", (e) => e.stopPropagation());
 
-        loadMessages();
-
-        // ===== NEURAL BACKGROUND CANVAS =====
-        const canvas = document.getElementById("neuralCanvas");
-        const ctx = canvas.getContext("2d");
-        let w, h;
-        function resizeCanvas() {
-          w = window.innerWidth;
-          h = window.innerHeight;
-          canvas.width = w;
-          canvas.height = h;
-        }
-        window.addEventListener("resize", resizeCanvas);
-        resizeCanvas();
-
-        const nodes = [];
-        for (let i = 0; i < 55; i++) {
-          nodes.push({
-            x: Math.random() * w,
-            y: Math.random() * h,
-            vx: (Math.random() - 0.5) * 0.6,
-            vy: (Math.random() - 0.5) * 0.6,
-          });
-        }
-
-        function drawNeural() {
-          ctx.clearRect(0, 0, w, h);
-          // connections
-          for (let i = 0; i < nodes.length; i++) {
-            for (let j = i + 1; j < nodes.length; j++) {
-              const dx = nodes[i].x - nodes[j].x;
-              const dy = nodes[i].y - nodes[j].y;
-              const dist = Math.sqrt(dx * dx + dy * dy);
-              if (dist < 130) {
-                ctx.beginPath();
-                ctx.moveTo(nodes[i].x, nodes[i].y);
-                ctx.lineTo(nodes[j].x, nodes[j].y);
-                ctx.strokeStyle = `rgba(0, 242, 255, ${
-                  0.2 * (1 - dist / 180)
-                })`;
-                ctx.lineWidth = 1.3;
-                ctx.stroke();
-              }
-            }
-          }
-          // nodes
-          nodes.forEach((n) => {
-            ctx.beginPath();
-            ctx.arc(n.x, n.y, 3.5, 0, 2 * Math.PI);
-            ctx.fillStyle = "#00f2ff";
-            ctx.shadowColor = "#00f2ff";
-            ctx.shadowBlur = 12;
-            ctx.fill();
-            ctx.shadowBlur = 0;
-
-            n.x += n.vx;
-            n.y += n.vy;
-            if (n.x < 0 || n.x > w) n.vx *= -1;
-            if (n.y < 0 || n.y > h) n.vy *= -1;
-          });
-          requestAnimationFrame(drawNeural);
-        }
-        drawNeural();
+        // ensure any link inside shareBox closes it (optional)
+        waLink.addEventListener("click", () =>
+          setTimeout(() => (shareBox.style.display = "none"), 200)
+        );
+        fbLink.addEventListener("click", () =>
+          setTimeout(() => (shareBox.style.display = "none"), 200)
+        );
       })();
     </script>
   </body>
